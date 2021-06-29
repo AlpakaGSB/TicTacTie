@@ -50,10 +50,11 @@ int main() {
             board->getAvailableMoves(possibleMoves);
             int index = rand() % (possibleMoves.size());
             board->performMove(OPPONENT, possibleMoves[index]);
+
             if (board->checkStatus() != Board::IN_PROGRESS) {
                 if (board->checkStatus() != Board::DRAW) {
                     RANDOM_CNT++;
-                    std::cout << "MCTS2_WIN" << std::endl;
+                    std::cout << "RANDOM_WIN" << std::endl;
                 } else {
                     DRAW_CNT++;
                     std::cout << "DRAW" << std::endl;

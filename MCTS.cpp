@@ -90,7 +90,7 @@ Position MonteCarloTreeSearch::findNextMove(Board board, int playerNo) {
     std::cerr << tree->getRoot().getState()->getVisitCount() << ' ';
 
     auto result = winnerNode.getState()->getBoard().getLastPosition();
-    //Node::deleteTree(rootNode);
-    Node::deleteTree(root);
+    Node::deleteTree(rootNode);
+    //Node::deleteTree(root);
     return result;
 }

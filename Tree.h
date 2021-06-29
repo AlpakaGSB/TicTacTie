@@ -6,7 +6,7 @@ class Tree {
 private:
     Node *root;
 public:
-    void rerootByBoard(Position pos);
+    void rerootByBoard(State* state);
 
     const Node &getRoot() const;
 

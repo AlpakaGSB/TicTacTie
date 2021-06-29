@@ -6,7 +6,8 @@
 class Board {
 private:
     std::vector<std::vector<signed char>> smallField;//81 cells (9x9)
-    std::vector<std::vector<signed char>> bigField;//9 areas 9x9 each
+    std::vector<std::vector<signed char>> bigField; //9 areas 3x3 each
+
     Position lastPosition{-1, -1};
 
     bool checkWin(int player, const std::vector<std::vector<signed char>> &field, int dX, int dY) const;
@@ -37,4 +38,6 @@ public:
     int checkStatus() const;
 
     void getAvailableMoves(std::vector<Position> &res) const;
+
+    const std::vector<std::vector<signed char>> &getBigField() const;
 };

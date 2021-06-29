@@ -100,3 +100,7 @@ void Board::getAvailableMoves(std::vector<Position> &res) const {//all available
         return;
     }
 }
+
+const std::vector<std::vector<signed char>> &Board::getBigField() const {
+    return bigField;
+}

@@ -1,6 +1,6 @@
 #include "Other.h"
 
-int COMP, OPPONENT;
+int COMP, OPPONENT, OPPONENT_WIN, COMP_WIN;
 
 int changePlayer(int player) {
     if (player == COMP)return OPPONENT;

@@ -8,23 +8,23 @@ Node *MonteCarloTreeSearch::selectPromisingNode(Node *rootNode) {
     return node;
 }
 
-void MonteCarloTreeSearch::expandNode(Node &node) {
-    std::vector<State> possibleStates = node.getState()->getAllPossibleStates();
+void MonteCarloTreeSearch::expandNode(Node* node) {
+    std::vector<State> possibleStates = node->getState()->getAllPossibleStates();
     for (const auto &state:possibleStates) {
         State *nstate = new State(state);
         Node *newNode = new Node(nstate);
-        newNode->setParent(&node);
-        newNode->getState()->setPlayerNo(node.getState()->getOpponent());
+        newNode->setParent(node);
+        newNode->getState()->setPlayerNo(node->getState()->getOpponent());
         newNode->getState()->setVisitCount(0);
         newNode->getState()->setWinScore(0);
-        node.addChild(newNode);
+        node->addChild(newNode);
     }
 }
 
 void MonteCarloTreeSearch::backPropagation(Node *nodeToExplore, int playerNo, Node *root) {
     int player = Board::DRAW;
-    if (playerNo == Board::COMP_WIN)player = COMP;
-    else if (playerNo == Board::OPPONENT_WIN)player = OPPONENT;
+    if (playerNo == COMP_WIN)player = COMP;
+    else if (playerNo == OPPONENT_WIN)player = OPPONENT;
     root->getState()->incrementVisit();
     Node *tempNode = nodeToExplore;
     while (tempNode != root) {
@@ -47,7 +47,7 @@ int MonteCarloTreeSearch::simulateRandomPlayout(const Node &node) {
     if (boardStatus == Board::DRAW) {
         return boardStatus;
     }
-    if (boardStatus == Board::OPPONENT_WIN || boardStatus == Board::COMP_WIN) {
+    if (boardStatus == OPPONENT_WIN || boardStatus == COMP_WIN) {
         tempNode->getParent()->getState()->setWinScore(-INF);
         tempNode->getState()->setWinScore(INF);
         return boardStatus;
@@ -59,7 +59,7 @@ int MonteCarloTreeSearch::simulateRandomPlayout(const Node &node) {
     return boardStatus;
 }
 
-Position MonteCarloTreeSearch::findNextMove(Board board, int playerNo) {
+Position MonteCarloTreeSearch::findNextMove(const Board board, int playerNo) {
     opponent = changePlayer(playerNo);
     State *state = new State();
     state->setPlayerNo(playerNo);
@@ -75,7 +75,7 @@ Position MonteCarloTreeSearch::findNextMove(Board board, int playerNo) {
         Node *promisingNode = selectPromisingNode(rootNode);
         if (promisingNode->getState()->getBoard().checkStatus() == Board::IN_PROGRESS &&
             promisingNode->getState()->getVisitCount()) {
-            expandNode(*promisingNode);
+            expandNode(promisingNode);
         }
         Node *nodeToExplore = promisingNode;
         if (!promisingNode->getChildren().empty()) {

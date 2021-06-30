@@ -20,8 +20,8 @@ public:
 
     static const int IN_PROGRESS = -1;
     static const int DRAW = 0;          //end of game description and big field description
-    static const int OPPONENT_WIN = 1;
-    static const int COMP_WIN = 2;
+//    static const int OPPONENT_WIN = 1;
+//    static const int COMP_WIN = 2;
 
     //static int COMP;          // small field description
     //static int OPPONENT;
@@ -40,4 +40,6 @@ public:
     void getAvailableMoves(std::vector<Position> &res) const;
 
     const std::vector<std::vector<signed char>> &getBigField() const;
+
+    const std::vector<std::vector<signed char>> &getSmallField() const;
 };

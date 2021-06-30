@@ -12,14 +12,14 @@ private:
 
     Node *selectPromisingNode(Node *rootNode);
 
-    static void expandNode(Node &node);
+    static void expandNode(Node *node);
 
     void backPropagation(Node *nodeToExplore, int playerNo, Node *root);
 
     static int simulateRandomPlayout(const Node &node);
 
 public:
-    Position findNextMove(Board board, int playerNo);
+    Position findNextMove(Board, int);
 };
 
 

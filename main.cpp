@@ -13,7 +13,7 @@ int main() {
     int DRAW_CNT = 0;
     int MCTS_CNT = 0;
     int MINIMAX_CNT = 0;
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 1; i++) {
         Board *board = new Board();
         while (1) {
             int a, b;
@@ -32,6 +32,8 @@ int main() {
 //            cin >> m1 >> m2;
 //        }
             //cout << pos.x << ' ' << pos.y << endl;
+            COMP_WIN = 2;
+            OPPONENT_WIN = 1;
             COMP = 4;
             OPPONENT = 3;
             Position pos2 = minimax::findNextMove(*board);
@@ -47,7 +49,8 @@ int main() {
                 }
                 break;
             }
-
+            COMP_WIN = 1;
+            OPPONENT_WIN = 2;
             COMP = 3;
             OPPONENT = 4;
             MonteCarloTreeSearch *mcts1 = new MonteCarloTreeSearch();
@@ -66,6 +69,7 @@ int main() {
             delete mcts1;
         }
         std::cout << "GAME " << i + 1 << " FINISHED" << std::endl;
+        delete board;
     }
     std::cout << "MINIMAX: " << MINIMAX_CNT << std::endl;
     std::cout << "DRAW: " << DRAW_CNT << std::endl;

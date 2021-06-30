@@ -36,7 +36,7 @@ int Board::count(const std::vector<std::vector<signed char>> &field, int player,
 }
 
 Board::Board() {
-    smallField.assign(9, std::vector<signed char>(9, 5));//ENPTY
+    smallField.assign(9, std::vector<signed char>(9, 5));//EMPTY
     bigField.assign(3, std::vector<signed char>(3, -1));//IN_PROGRESS
 }
 
@@ -103,4 +103,8 @@ void Board::getAvailableMoves(std::vector<Position> &res) const {//all available
 
 const std::vector<std::vector<signed char>> &Board::getBigField() const {
     return bigField;
+}
+
+const std::vector<std::vector<signed char>> &Board::getSmallField() const {
+    return smallField;
 }

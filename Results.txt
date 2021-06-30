@@ -1,0 +1,46 @@
+MCTS (1sec/move) -- RANDOM
+MCTS: 50
+DRAWS: 0
+RANDOM: 0
+
+===============================================
+
+RANDOM -- MCTS (1sec/move)
+RANDOM: 0
+DRAWS: 0
+MCTS: 50
+
+================================================
+
+MCTS (1sec/move) -- MCTS (1sec/move)
+MCTS(X): 25
+DRAWS: 0
+MCTS(O): 25
+
+================================================
+
+MCTS (1sec/move) -- MINIMAX(depth = 5)
+MCTS: 30
+DRAWS: 1
+MINIMAX: 19
+
+================================================
+
+MINIMAX(depth = 6) -- MCTS (1sec/move)
+MINIMAX: 26
+DRAW: 1
+MCTS: 23
+
+=================================================
+
+MCTS (5sec/move) -- MINIMAX(depth = 6)
+MCTS: 17
+DRAWS: 2
+MINIMAX: 6
+
+=================================================
+
+MINIMAX(depth = 7) -- MCTS (5sec/move)
+MINIMAX: 8
+DRAW: 2
+MCTS: 15

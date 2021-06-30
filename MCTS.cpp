@@ -91,6 +91,7 @@ Position MonteCarloTreeSearch::findNextMove(const Board board, int playerNo) {
 
     auto result = winnerNode.getState()->getBoard().getLastPosition();
     Node::deleteTree(rootNode);
+    delete tree;
     //Node::deleteTree(root);
     return result;
 }

@@ -38,4 +38,6 @@ public:
     void incrementVisit();
 
     void togglePlayer();
+
+    ~State();
 };

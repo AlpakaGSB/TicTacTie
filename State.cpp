@@ -1,4 +1,3 @@
-
 #include "State.h"
 #include "Other.h"
 
@@ -76,3 +75,5 @@ void State::incrementVisit() {
 void State::togglePlayer() {
     playerNo = getOpponent();
 }
+
+State::~State() {}

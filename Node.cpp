@@ -18,8 +18,6 @@ State *Node::getState() const {
 }
 
 Node::~Node() {
-    state = nullptr;
-    parent = nullptr;
     children.clear();
 }
 
@@ -34,8 +32,7 @@ void Node::setParent(Node *newParent) {
 }
 
 void Node::addChild(Node *child) {
-    Node *node = new Node(*child);
-    children.emplace_back(node);
+    children.emplace_back(child);
 }
 
 Node *Node::getRandomChildNode() {

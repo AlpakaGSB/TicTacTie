@@ -46,6 +46,7 @@ void Node::deleteTree(Node *node) {
     for (Node *child: children) {
         if (child != nullptr)deleteTree(child);
     }
+    delete node->getState();
     delete node;
 }
 

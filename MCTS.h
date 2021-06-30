@@ -16,7 +16,7 @@ private:
 
     void backPropagation(Node *nodeToExplore, int playerNo, Node *root);
 
-    static int simulateRandomPlayout(const Node &node);
+    static int simulateRandomPlayout(Node *node);
 
 public:
     Position findNextMove(Board, int);

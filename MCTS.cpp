@@ -8,7 +8,7 @@ Node *MonteCarloTreeSearch::selectPromisingNode(Node *rootNode) {
     return node;
 }
 
-void MonteCarloTreeSearch::expandNode(Node* node) {
+void MonteCarloTreeSearch::expandNode(Node *node) {
     std::vector<State> possibleStates = node->getState()->getAllPossibleStates();
     for (const auto &state:possibleStates) {
         State *nstate = new State(state);
@@ -38,24 +38,30 @@ void MonteCarloTreeSearch::backPropagation(Node *nodeToExplore, int playerNo, No
     }
 }
 
-int MonteCarloTreeSearch::simulateRandomPlayout(const Node &node) {
-    Node *tempNode = new Node(node);
+int MonteCarloTreeSearch::simulateRandomPlayout(Node *node) {
+    Node *tempNode = new Node(*node);
     State *tempState = new State();
     tempState->setBoard(tempNode->getState()->getBoard());
     tempState->setPlayerNo(tempNode->getState()->getPlayerNo());
     int boardStatus = tempState->getBoard().checkStatus();
     if (boardStatus == Board::DRAW) {
+        delete tempNode;
+        delete tempState;
         return boardStatus;
     }
     if (boardStatus == OPPONENT_WIN || boardStatus == COMP_WIN) {
-        tempNode->getParent()->getState()->setWinScore(-INF);
-        tempNode->getState()->setWinScore(INF);
+        node->getParent()->getState()->setWinScore(-INF);
+        node->getState()->setWinScore(INF);
+        delete tempNode;
+        delete tempState;
         return boardStatus;
     }
     while (boardStatus == Board::IN_PROGRESS) {
         tempState->randomPlay();
         boardStatus = tempState->getBoard().checkStatus();
     }
+    delete tempNode;
+    delete tempState;
     return boardStatus;
 }
 
@@ -81,17 +87,18 @@ Position MonteCarloTreeSearch::findNextMove(const Board board, int playerNo) {
         if (!promisingNode->getChildren().empty()) {
             nodeToExplore = promisingNode->getRandomChildNode();
         }
-        int playoutResult = simulateRandomPlayout(*nodeToExplore);
+        int playoutResult = simulateRandomPlayout(nodeToExplore);
         backPropagation(nodeToExplore, playoutResult, rootNode);
         end = std::chrono::steady_clock::now();
     }
-    Node winnerNode = rootNode->getChildWithMaxScore();
+    Node *winnerNode = new Node(rootNode->getChildWithMaxScore());
     //tree->setRoot(&winnerNode);
     std::cerr << tree->getRoot().getState()->getVisitCount() << ' ';
 
-    auto result = winnerNode.getState()->getBoard().getLastPosition();
+    auto result = winnerNode->getState()->getBoard().getLastPosition();
     Node::deleteTree(rootNode);
     delete tree;
+    delete winnerNode;
     //Node::deleteTree(root);
     return result;
 }

@@ -44,3 +44,41 @@ MINIMAX(depth = 7) -- MCTS (5sec/move)
 MINIMAX: 8
 DRAW: 2
 MCTS: 15
+
+=================================================
+
+MINIMAX(depth = 6) -- MCTS (5sec/move)
+MINIMAX: 12
+DRAW: 7
+MCTS: 31
+
+===================================================
+
+MINIMAX(eval1, d = 7) -- MINIMAX(eval2, d = 7)
+EVAL1: 47
+DRAW: 3
+EVAL2: 50
+
+
+===================================================
+
+MINIMAX(eval2, d = 7) -- MINIMAX(eval1, d = 7)
+EVAL2: 59
+DRAW: 5
+EVAL1: 36
+
+===================================================
+
+MINIMAX(eval2, 5sec/move) -- MCTS(5sec/move)
+
+MINIMAX: 11
+DRAW: 2
+MCTS: 12
+
+====================================================
+
+MINIMAX(eval2, 10sec/move) -- MCTS(10sec/move)
+
+MINIMAX: 11
+DRAW: 3
+MCTS: 11

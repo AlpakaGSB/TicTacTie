@@ -38,7 +38,7 @@ int main() {
             COMP = 4;
             OPPONENT = 3;
             MonteCarloTreeSearch *mcts = new MonteCarloTreeSearch();
-            Position pos2 = mcts->findNextMove(*board, COMP);
+            Position pos2 = mcts->findNextMove(*board, COMP, 3000);
             board->performMove(COMP, {pos2.x, pos2.y});
 
             if (board->checkStatus() != Board::IN_PROGRESS) {
@@ -55,7 +55,7 @@ int main() {
             OPPONENT_WIN = 2;
             COMP = 3;
             OPPONENT = 4;
-            Position pos1 = minimax::findNextMoveWithTimeLimit(*board, minimax::evaluate2, 10000);
+            Position pos1 = minimax::findNextMoveWithTimeLimit(*board, minimax::evaluate2, 3000);
             board->performMove(COMP, {pos1.x, pos1.y});
             if (board->checkStatus() != Board::IN_PROGRESS) {
                 if (board->checkStatus() != Board::DRAW) {
@@ -75,4 +75,3 @@ int main() {
     std::cout << "DRAW: " << DRAW_CNT << std::endl;
     std::cout << "MCTS: " << MCTS_CNT << std::endl;
 }
-

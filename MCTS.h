@@ -19,7 +19,7 @@ private:
     static int simulateRandomPlayout(Node *node);
 
 public:
-    Position findNextMove(Board, int);
+    Position findNextMove(const Board&, int, int);
 };
 
 

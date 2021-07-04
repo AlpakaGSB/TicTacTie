@@ -82,3 +82,9 @@ MINIMAX(eval2, 10sec/move) -- MCTS(10sec/move)
 MINIMAX: 11
 DRAW: 3
 MCTS: 11
+
+MCTS(30sec/move) -- MINIMAX(eval2, 30sec/move)
+
+MCTS: 12
+DRAW: 5
+MINIMAX: 8

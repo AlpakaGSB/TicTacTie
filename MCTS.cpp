@@ -65,7 +65,8 @@ int MonteCarloTreeSearch::simulateRandomPlayout(Node *node) {
     return boardStatus;
 }
 
-Position MonteCarloTreeSearch::findNextMove(const Board board, int playerNo) {
+Position MonteCarloTreeSearch::findNextMove(const Board& board, int playerNo, int time) {
+    const milliseconds TIME_LIMIT{time};
     opponent = changePlayer(playerNo);
     State *state = new State();
     state->setPlayerNo(playerNo);

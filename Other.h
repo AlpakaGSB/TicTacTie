@@ -15,4 +15,3 @@ extern int COMP, OPPONENT, OPPONENT_WIN, COMP_WIN;
 
 const int INF = 1e9 + 7;
 const int MAX_DEPTH = 8;
-const milliseconds TIME_LIMIT{10000};

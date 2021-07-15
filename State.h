@@ -8,12 +8,12 @@ class State {
 private:
     Board board;
     int playerNo;
-    int visitCount;
+    long long int visitCount;
     long double winScore;
 public:
     void setBoard(const Board &newBoard);
 
-    std::vector<State> getAllPossibleStates() const;
+    std::vector<State*> getAllPossibleStates() const;
 
     void randomPlay();
 

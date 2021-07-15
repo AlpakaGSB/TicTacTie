@@ -12,7 +12,7 @@ private:
 
     bool checkWin(int player, const std::vector<std::vector<signed char>> &field, int dX, int dY) const;
 
-    int checkSmallFieldStatus(Position smallFieldPosition);
+    int checkSmallFieldStatus(const Position&);
 
     int count(const std::vector<std::vector<signed char>> &field, int player, int deltaX, int deltaY) const;
 

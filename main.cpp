@@ -17,20 +17,20 @@ int main() {
         Board *board = new Board();
         while (1) {
             int a, b;
-//        cin >> a >> b;
-//        if (a != -1) {
-//            board->performMove(OPPONENT, {a, b});
-//        }
-//            vector<Position> possibleMoves;
-//            board->getAvailableMoves(possibleMoves);
-//            int index = rand() % (possibleMoves.size());
-//            board->performMove(OPPONENT, possibleMoves[index]);
-//            int n;
-//        cin >> n;
-//        for (int i = 0; i < n; i++) {
-//            int m1, m2;
-//            cin >> m1 >> m2;
-//        }
+            //        cin >> a >> b;
+            //        if (a != -1) {
+            //            board->performMove(OPPONENT, {a, b});
+            //        }
+            //            vector<Position> possibleMoves;
+            //            board->getAvailableMoves(possibleMoves);
+            //            int index = rand() % (possibleMoves.size());
+            //            board->performMove(OPPONENT, possibleMoves[index]);
+            //            int n;
+            //        cin >> n;
+            //        for (int i = 0; i < n; i++) {
+            //            int m1, m2;
+            //            cin >> m1 >> m2;
+            //        }
             //cout << pos.x << ' ' << pos.y << endl;
 
             COMP_WIN = 2;

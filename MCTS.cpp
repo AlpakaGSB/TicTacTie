@@ -9,9 +9,9 @@ Node *MonteCarloTreeSearch::selectPromisingNode(Node *rootNode) {
 }
 
 void MonteCarloTreeSearch::expandNode(Node *node) {
-    std::vector<State> possibleStates = node->getState()->getAllPossibleStates();
-    for (const auto &state:possibleStates) {
-        State *nstate = new State(state);
+    std::vector<State*> possibleStates = node->getState()->getAllPossibleStates();
+    for (auto state:possibleStates) {
+        State *nstate = new State(*state);
         Node *newNode = new Node(nstate);
         newNode->setParent(node);
         newNode->getState()->setPlayerNo(node->getState()->getOpponent());
@@ -19,6 +19,7 @@ void MonteCarloTreeSearch::expandNode(Node *node) {
         newNode->getState()->setWinScore(0);
         node->addChild(newNode);
     }
+    for (auto state:possibleStates)delete state;
 }
 
 void MonteCarloTreeSearch::backPropagation(Node *nodeToExplore, int playerNo, Node *root) {
@@ -65,7 +66,7 @@ int MonteCarloTreeSearch::simulateRandomPlayout(Node *node) {
     return boardStatus;
 }
 
-Position MonteCarloTreeSearch::findNextMove(const Board& board, int playerNo, int time) {
+Position MonteCarloTreeSearch::findNextMove(const Board &board, int playerNo, int time) {
     const milliseconds TIME_LIMIT{time};
     opponent = changePlayer(playerNo);
     State *state = new State();
@@ -94,7 +95,8 @@ Position MonteCarloTreeSearch::findNextMove(const Board& board, int playerNo, in
     }
     Node *winnerNode = new Node(rootNode->getChildWithMaxScore());
     //tree->setRoot(&winnerNode);
-    std::cerr << tree->getRoot().getState()->getVisitCount() << ' ';
+    std::clog << tree->getRoot().getState()->getVisitCount() << ' ';
+    std::clog << winnerNode->getState()->getWinScore() / winnerNode->getState()->getVisitCount() << ' ';
 
     auto result = winnerNode->getState()->getBoard().getLastPosition();
     Node::deleteTree(rootNode);

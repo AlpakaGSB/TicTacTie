@@ -5,30 +5,33 @@ void State::setBoard(const Board &newBoard) {
     State::board = newBoard;
 }
 
-std::vector<State> State::getAllPossibleStates() const {
-    std::vector<State> res;
+std::vector<State *> State::getAllPossibleStates() const {
+    std::vector<State *> res;
     std::vector<Position> possibleMoves;
     getBoard().getAvailableMoves(possibleMoves);
     for (Position move:possibleMoves) {
-        State newState = *this;
-        Board newBoard = newState.getBoard();
+        State *newState = new State;
+        Board newBoard = this->getBoard();
         newBoard.performMove(playerNo, move);
-        newState.board = newBoard;
-        newState.playerNo = changePlayer(playerNo);
+        newState->board = newBoard;
+        newState->playerNo = changePlayer(playerNo);
+        newState->visitCount = 0;
+        newState->winScore = 0;
         res.emplace_back(newState);
     }
     return res;
 }
 
 void State::randomPlay() {             //makes a random move
-    std::vector<State> states = getAllPossibleStates();
+    std::vector<State *> states = getAllPossibleStates();
     int numberOfValidMoves = static_cast<int>(states.size());
     int pos = rand() % numberOfValidMoves;
-    State res = states[pos];
-    this->board = res.board;
-    this->playerNo = res.playerNo;
-    this->visitCount = res.visitCount;
-    this->winScore = res.winScore;
+    State *res = states[pos];
+    this->board = res->board;
+    this->playerNo = res->playerNo;
+    this->visitCount = res->visitCount;
+    this->winScore = res->winScore;
+    for (auto el:states)delete el;
 }
 
 const Board State::getBoard() const {

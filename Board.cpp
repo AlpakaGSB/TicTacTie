@@ -16,7 +16,7 @@ bool Board::checkWin(int player, const std::vector<std::vector<signed char>> &fi
     }
 }
 
-int Board::checkSmallFieldStatus(Position smallFieldPosition) {
+int Board::checkSmallFieldStatus(const Position &smallFieldPosition) {
     if (checkWin(COMP, smallField, smallFieldPosition.x * 3, smallFieldPosition.y * 3))return COMP_WIN;
     if (checkWin(OPPONENT, smallField, smallFieldPosition.x * 3, smallFieldPosition.y * 3))return OPPONENT_WIN;
     if (count(smallField, EMPTY, smallFieldPosition.x * 3, smallFieldPosition.y * 3) == 0)return DRAW;

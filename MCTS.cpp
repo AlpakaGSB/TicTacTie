@@ -9,7 +9,7 @@ Node *MonteCarloTreeSearch::selectPromisingNode(Node *rootNode) {
 }
 
 void MonteCarloTreeSearch::expandNode(Node *node) {
-    std::vector<State*> possibleStates = node->getState()->getAllPossibleStates();
+    std::vector<State *> possibleStates = node->getState()->getAllPossibleStates();
     for (auto state:possibleStates) {
         State *nstate = new State(*state);
         Node *newNode = new Node(nstate);
@@ -66,14 +66,8 @@ int MonteCarloTreeSearch::simulateRandomPlayout(Node *node) {
     return boardStatus;
 }
 
-Position MonteCarloTreeSearch::findNextMove(const Board &board, int playerNo, int time) {
+Position MonteCarloTreeSearch::findNextMove(int time) {
     const milliseconds TIME_LIMIT{time};
-    opponent = changePlayer(playerNo);
-    State *state = new State();
-    state->setPlayerNo(playerNo);
-    state->setBoard(board);
-    Node *root = new Node(state);
-    Tree *tree = new Tree(root);
     Node *rootNode = root;
     //rootNode->setParent(nullptr);
     int cnt = 10000;
@@ -93,15 +87,46 @@ Position MonteCarloTreeSearch::findNextMove(const Board &board, int playerNo, in
         backPropagation(nodeToExplore, playoutResult, rootNode);
         end = std::chrono::steady_clock::now();
     }
-    Node *winnerNode = new Node(rootNode->getChildWithMaxScore());
+    Node *winnerNode = rootNode->getChildWithMaxScore();
     //tree->setRoot(&winnerNode);
-    std::clog << tree->getRoot().getState()->getVisitCount() << ' ';
+    std::clog << rootNode->getState()->getVisitCount() << ' ';
     std::clog << winnerNode->getState()->getWinScore() / winnerNode->getState()->getVisitCount() << ' ';
 
     auto result = winnerNode->getState()->getBoard().getLastPosition();
-    Node::deleteTree(rootNode);
-    delete tree;
-    delete winnerNode;
-    //Node::deleteTree(root);
+    Node::deleteTree(root, winnerNode);
+    root = winnerNode;
     return result;
 }
+
+MonteCarloTreeSearch::MonteCarloTreeSearch(const Board &board, int player) {
+    State *state = new State();
+    state->setBoard(board);
+    state->setPlayerNo(player);
+    state->setVisitCount(0);
+    state->setWinScore(0);
+    Node *rootNode = new Node(state);
+    root = rootNode;
+}
+
+void MonteCarloTreeSearch::reRoot(const Board &board, int player) {
+    std::vector<Node *> children = root->getChildren();
+    for (auto child: children) {
+        auto smallF = child->getState()->getBoard().getSmallField();
+        if (smallF == board.getSmallField()) {
+            Node::deleteTree(root, child);
+            root = child;
+            return;
+        }
+    }
+
+    Node::deleteTree(root, nullptr);
+    State *state = new State();
+    state->setBoard(board);
+    state->setPlayerNo(player);
+    state->setVisitCount(0);
+    state->setWinScore(0);
+    Node *rootNode = new Node(state);
+    root = rootNode;
+
+}
+

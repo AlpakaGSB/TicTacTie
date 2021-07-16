@@ -2,13 +2,15 @@
 
 #include "Node.h"
 #include "UCT.h"
-#include "Tree.h"
 
 class MonteCarloTreeSearch {
+
 private:
     static const int WIN_SCORE = 1;
+
     int level;
     int opponent;
+    Node *root;
 
     Node *selectPromisingNode(Node *rootNode);
 
@@ -19,7 +21,11 @@ private:
     static int simulateRandomPlayout(Node *node);
 
 public:
-    Position findNextMove(const Board&, int, int);
+    MonteCarloTreeSearch(const Board &, int);
+
+    Position findNextMove(int);
+
+    void reRoot(const Board&, int);
 };
 
 

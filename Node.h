@@ -25,9 +25,9 @@ public:
 
     Node *getRandomChildNode();
 
-    Node getChildWithMaxScore();
+    Node *getChildWithMaxScore();
 
 
-    static void deleteTree(Node *node);
+    static void deleteTree(Node *, Node *);
 };
 

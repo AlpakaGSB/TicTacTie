@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <random>
 
-Position minimax::findNextMove(const Board &board, int evaluation(const Board &, int, int, int)) {
+Position minimax::findNextMove(const Board &board, int evaluation(const Board &, int, int, int), int mDepth) {
     Position result = {-1, -1};
     int bestVal = -INF;
 
@@ -16,13 +16,12 @@ Position minimax::findNextMove(const Board &board, int evaluation(const Board &,
     for (auto move:moves) {
         Board tempBoard = board;
         tempBoard.performMove(COMP, move);
-        int curVal = calculate(tempBoard, 1, OPPONENT, -INF, INF, evaluation, MAX_DEPTH);
+        int curVal = calculate(tempBoard, 1, OPPONENT, -INF, INF, evaluation, mDepth);
         if (curVal > bestVal) {
             bestVal = curVal;
             result = move;
         }
     }
-    std::cerr << "<" << bestVal << "> ";
     return result;
 }
 
@@ -43,7 +42,7 @@ minimax::findNextMoveWithTimeLimit(const Board &board, int (*evaluation)(const B
     }
     auto start = std::chrono::steady_clock::now();
     auto end = std::chrono::steady_clock::now();
-    int depth = 5;
+    int depth = 7;
     while (std::chrono::duration_cast<std::chrono::milliseconds>(end - start) < TIME_LIMIT) {
         std::vector<std::pair<int, Position>> tempScores;
         for (auto &move: scores) {

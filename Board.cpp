@@ -40,10 +40,7 @@ Board::Board() {
     bigField.assign(3, std::vector<signed char>(3, -1));//IN_PROGRESS
 }
 
-Board::~Board() {
-    smallField.clear();
-    bigField.clear();
-}
+Board::~Board() {}
 
 void Board::performMove(int player, Position pos) {
     smallField[pos.x][pos.y] = player;
@@ -108,3 +105,4 @@ const std::vector<std::vector<signed char>> &Board::getBigField() const {
 const std::vector<std::vector<signed char>> &Board::getSmallField() const {
     return smallField;
 }
+

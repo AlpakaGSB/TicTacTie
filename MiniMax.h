@@ -4,7 +4,7 @@
 
 class minimax {
 public:
-    static Position findNextMove(const Board &, int (const Board &, int, int, int));
+    static Position findNextMove(const Board &, int (const Board &, int, int, int), int);
 
     static int calculate(Board, int, int, int, int, int(const Board &, int, int, int), int);
 

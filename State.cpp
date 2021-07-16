@@ -23,18 +23,17 @@ std::vector<State *> State::getAllPossibleStates() const {
 }
 
 void State::randomPlay() {             //makes a random move
-    std::vector<State *> states = getAllPossibleStates();
-    int numberOfValidMoves = static_cast<int>(states.size());
+    std::vector<Position>moves;
+    this->board.getAvailableMoves(moves);
+    int numberOfValidMoves = static_cast<int>(moves.size());
     int pos = rand() % numberOfValidMoves;
-    State *res = states[pos];
-    this->board = res->board;
-    this->playerNo = res->playerNo;
-    this->visitCount = res->visitCount;
-    this->winScore = res->winScore;
-    for (auto el:states)delete el;
+    Board nboard = this->board;
+    nboard.performMove(this->playerNo, moves[pos]);
+    this->board = nboard;
+    this->playerNo = changePlayer(playerNo);
 }
 
-const Board State::getBoard() const {
+const Board& State::getBoard() const {
     return board;
 }
 
@@ -47,7 +46,7 @@ int State::getOpponent() {
     else return COMP;
 }
 
-int State::getVisitCount() {
+long long State::getVisitCount() {
     return visitCount;
 }
 

@@ -1,6 +1,6 @@
 #include "Node.h"
 
-Node Node::getChildWithMaxScore() {
+Node *Node::getChildWithMaxScore() {
     int mx = -INF;
     Node *res;
     for (Node *child:children) {
@@ -10,7 +10,7 @@ Node Node::getChildWithMaxScore() {
             res = child;
         }
     }
-    return *res;
+    return res;
 }
 
 State *Node::getState() const {
@@ -41,10 +41,11 @@ Node *Node::getRandomChildNode() {
     return children[pos];
 }
 
-void Node::deleteTree(Node *node) {
+void Node::deleteTree(Node *node, Node *prohibited) {
+    if (node == prohibited)return;
     std::vector<Node *> children = node->getChildren();
     for (Node *child: children) {
-        if (child != nullptr)deleteTree(child);
+        if (child != nullptr)deleteTree(child, prohibited);
     }
     delete node->getState();
     delete node;

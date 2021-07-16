@@ -13,8 +13,9 @@ int main() {
     int DRAW_CNT = 0;
     int MCTS_CNT = 0;
     int MINIMAX_CNT = 0;
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 1; i++) {
         Board *board = new Board();
+        auto *mcts = new MonteCarloTreeSearch(*board, 4);
         while (1) {
             int a, b;
             //        cin >> a >> b;
@@ -37,10 +38,8 @@ int main() {
             OPPONENT_WIN = 1;
             COMP = 4;
             OPPONENT = 3;
-            MonteCarloTreeSearch *mcts = new MonteCarloTreeSearch();
-            Position pos2 = mcts->findNextMove(*board, COMP, 3000);
+            Position pos2 = mcts->findNextMove(1000);
             board->performMove(COMP, {pos2.x, pos2.y});
-
             if (board->checkStatus() != Board::IN_PROGRESS) {
                 if (board->checkStatus() != Board::DRAW) {
                     MCTS_CNT++;
@@ -55,8 +54,10 @@ int main() {
             OPPONENT_WIN = 2;
             COMP = 3;
             OPPONENT = 4;
-            Position pos1 = minimax::findNextMoveWithTimeLimit(*board, minimax::evaluate2, 3000);
+            Position pos1 = minimax::findNextMoveWithTimeLimit(*board, minimax::evaluate2, 1000);
             board->performMove(COMP, {pos1.x, pos1.y});
+            mcts->reRoot(*board, 4);
+
             if (board->checkStatus() != Board::IN_PROGRESS) {
                 if (board->checkStatus() != Board::DRAW) {
                     MINIMAX_CNT++;

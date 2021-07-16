@@ -17,13 +17,13 @@ public:
 
     void randomPlay();
 
-    const Board getBoard() const;
+    const Board& getBoard() const;
 
     int getPlayerNo() const;
 
     int getOpponent();
 
-    int getVisitCount();
+    long long getVisitCount();
 
     long double getWinScore() const;
 

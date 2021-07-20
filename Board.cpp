@@ -56,15 +56,13 @@ const Position &Board::getLastPosition() const {
 int Board::checkStatus() const {//general game status
     if (checkWin(COMP_WIN, bigField, 0, 0))return COMP_WIN;
     if (checkWin(OPPONENT_WIN, bigField, 0, 0))return OPPONENT_WIN;
-    std::vector<Position> availableMoves;
-    getAvailableMoves(availableMoves);
-    if (availableMoves.empty()) {
-        int numberOfCompWins = count(bigField, COMP_WIN, 0, 0);
-        int numberOfOpponentWins = count(bigField, OPPONENT_WIN, 0, 0);
-        if (numberOfCompWins > numberOfOpponentWins)return COMP_WIN;
-        else if (numberOfCompWins < numberOfOpponentWins)return OPPONENT_WIN;
-        else return DRAW;
-    } else return IN_PROGRESS;
+    int numberOfCompWins = count(bigField, COMP_WIN, 0, 0);
+    int numberOfOpponentWins = count(bigField, OPPONENT_WIN, 0, 0);
+    int numberOfDraws = count(bigField, DRAW, 0, 0);
+    if (numberOfDraws + numberOfCompWins + numberOfOpponentWins != 9)return IN_PROGRESS;
+    if (numberOfCompWins > numberOfOpponentWins)return COMP_WIN;
+    else if (numberOfCompWins < numberOfOpponentWins)return OPPONENT_WIN;
+    else return DRAW;
 }
 
 void Board::getAvailableMoves(std::vector<Position> &res) const {//all available moves
@@ -87,10 +85,13 @@ void Board::getAvailableMoves(std::vector<Position> &res) const {//all available
         }
         return;
     } else {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (smallField[i][j] == EMPTY && bigField[i / 3][j / 3] == IN_PROGRESS) {
-                    res.emplace_back(Position{i, j});
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (bigField[i][j] != IN_PROGRESS)continue;
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 3; l++) {
+                        if (smallField[i * 3 + k][j * 3 + l] == EMPTY)res.emplace_back(Position{i * 3 + k, j * 3 + l});
+                    }
                 }
             }
         }

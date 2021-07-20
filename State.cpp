@@ -27,9 +27,7 @@ void State::randomPlay() {             //makes a random move
     this->board.getAvailableMoves(moves);
     int numberOfValidMoves = static_cast<int>(moves.size());
     int pos = rand() % numberOfValidMoves;
-    Board nboard = this->board;
-    nboard.performMove(this->playerNo, moves[pos]);
-    this->board = nboard;
+    this->board.performMove(this->playerNo, moves[pos]);
     this->playerNo = changePlayer(playerNo);
 }
 

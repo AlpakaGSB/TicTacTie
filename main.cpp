@@ -10,69 +10,35 @@
 
 int main() {
     srand(time(0));
-    int DRAW_CNT = 0;
-    int MCTS_CNT = 0;
-    int MINIMAX_CNT = 0;
-    for (int i = 0; i < 1; i++) {
-        Board *board = new Board();
-        auto *mcts = new MonteCarloTreeSearch(*board, 4);
-        while (1) {
-            int a, b;
-            //        cin >> a >> b;
-            //        if (a != -1) {
-            //            board->performMove(OPPONENT, {a, b});
-            //        }
-            //            vector<Position> possibleMoves;
-            //            board->getAvailableMoves(possibleMoves);
-            //            int index = rand() % (possibleMoves.size());
-            //            board->performMove(OPPONENT, possibleMoves[index]);
-            //            int n;
-            //        cin >> n;
-            //        for (int i = 0; i < n; i++) {
-            //            int m1, m2;
-            //            cin >> m1 >> m2;
-            //        }
-            //cout << pos.x << ' ' << pos.y << endl;
 
-            COMP_WIN = 2;
-            OPPONENT_WIN = 1;
-            COMP = 4;
-            OPPONENT = 3;
-            Position pos2 = mcts->findNextMove(1000);
-            board->performMove(COMP, {pos2.x, pos2.y});
-            if (board->checkStatus() != Board::IN_PROGRESS) {
-                if (board->checkStatus() != Board::DRAW) {
-                    MCTS_CNT++;
-                    std::cout << "MCTS_WIN" << std::endl;
-                } else {
-                    DRAW_CNT++;
-                    std::cout << "DRAW" << std::endl;
-                }
-                break;
-            }
-            COMP_WIN = 1;
-            OPPONENT_WIN = 2;
-            COMP = 3;
-            OPPONENT = 4;
-            Position pos1 = minimax::findNextMoveWithTimeLimit(*board, minimax::evaluate2, 1000);
-            board->performMove(COMP, {pos1.x, pos1.y});
-            mcts->reRoot(*board, 4);
-
-            if (board->checkStatus() != Board::IN_PROGRESS) {
-                if (board->checkStatus() != Board::DRAW) {
-                    MINIMAX_CNT++;
-                    std::cout << "MINIMAX_WIN" << std::endl;
-                } else {
-                    DRAW_CNT++;
-                    std::cout << "DRAW" << std::endl;
-                }
-                break;
-            }
-        }
-        std::cout << "GAME " << i + 1 << " FINISHED" << std::endl;
-        delete board;
+    COMP_WIN = 2;
+    OPPONENT_WIN = 1;
+    COMP = 4;
+    OPPONENT = 3;
+    Board *board = new Board();
+    int a, b;
+    std::cin >> a >> b;
+    if (a != -1) {
+        board->performMove(OPPONENT, {a, b});
     }
-    std::cout << "MINIMAX: " << MINIMAX_CNT << std::endl;
-    std::cout << "DRAW: " << DRAW_CNT << std::endl;
-    std::cout << "MCTS: " << MCTS_CNT << std::endl;
+    auto *mcts = new MonteCarloTreeSearch(*board, COMP);
+    bool ok = true;
+    while (1) {
+        if (ok) {
+            Position pos2 = mcts->findNextMove(5000);
+            board->performMove(COMP, {pos2.x, pos2.y});
+            std::cout << pos2.x << ' ' << pos2.y << std::endl;
+            ok = false;
+        } else {
+            Position pos2 = mcts->findNextMove(5000);
+            board->performMove(COMP, {pos2.x, pos2.y});
+            std::cout << pos2.x << ' ' << pos2.y << std::endl;
+        }
+
+        int a, b;
+        std::cin >> a >> b;
+        board->performMove(OPPONENT, {a, b});
+        mcts->reRoot(*board, COMP);
+
+    }
 }

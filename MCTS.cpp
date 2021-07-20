@@ -127,6 +127,5 @@ void MonteCarloTreeSearch::reRoot(const Board &board, int player) {
     state->setWinScore(0);
     Node *rootNode = new Node(state);
     root = rootNode;
-
 }
 
